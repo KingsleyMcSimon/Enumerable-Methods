@@ -141,8 +141,85 @@ module Enumerable
         end
         myinject
     end
+
 end
 
 
+#Testing for my_each method
+
+#arraysofnumbers = [2, 4, 6, 8, 10, 12]
+#arraysofnumbers.my_each do |numbers|
+ #   numbers *= 5
+  #  print "#{numbers}"
+#end
+
+#Testing for my_each_with_index method
+
+#arraysofnumbers = [2, 4, 6, 8, 10, 12, 20, 50, 19, 25, 30, 40]
+#arraysofnumbers.my_each_with_index do |value, index|
+#puts "arraysofnumbers index #{index} takes the value of #{value}"
+#end
+
+#Testing for my_select method
+
+#arraysofnumbers = [2, 4, 6, 8, 10, 12, 20, 50, 19, 25, 30, 50]
+#output = arraysofnumbers.my_select do |numbers| numbers % 2 != 0; end
+#print output
+
+#Testing for my_all method
+
+#arraysofnumbers = [2, 4, 6, 8, 10, 12, 20, 50, 19, 25, 30, 40]
+#output = arraysofnumbers.my_all? do |b| b % 2 == 0; end
+#print output
+
+#Testing for my_any method
+
+#arraysofnumbers = [2, 4, 6, 8, 10, 12, 20, 50, 19, 25, 30, 25]
+#output = arraysofnumbers.my_any? do |b| b < 3; end
+#print output
+
+#Testing for my_none method
+
+#arraysofnumbers = [2, 4, 6, 8, 10, 12, 20, 50, 19, 25, 30, 10]
+#output = arraysofnumbers.my_none? do |b| b % 2 == 1; end
+#print output
+
+#Testing for my_count method
+
+#arraysofnumbers = [2, 5, 8, 10, 20, 15, 25, 15, 8, 4, 6]
+#arraysofnumbers = [5, 8, 10, 15, 15, 8, 4, 6, 8, 2, 12, 7, 8, 10]
+#output = arraysofnumbers.my_count 
+#output = arraysofnumbers.my_count (10)
+#output = arraysofnumbers () do |numbers| numbers % 2 == 1; end
+#output = arraysofnumbers (5) do |numbers|; end
+#print output
+
+#Testing for my_map method
+
+#arraysofnumbers = [2, 4, 6, 8, 10, 12, 20, 50, 19, 25, 30, 20]
+#output = arraysofumbers.my_map do |numbers| numbers * 2; end 
+#print output
+
+#Testing for my_map_again method (that takes a proc)
+
+#arraysofnumbers = [2, 4, 6, 8, 10, 12, 20, 50, 19, 25, 30, 10, 10]
+#myproc = Proc.new do |numbers| numbers * 2; end
+#output = arraysofnumbers.my_map_again(myproc)
+#print output
+
+#Testing for my_map_final(3) (that takes either a proc or a block)
+
+#arraysofnumbers = [2, 4, 6, 8, 10, 12, 20, 50, 19, 25, 35, 30]
+#myproc = Proc.new do |numbers| numbers * 2; end
+#output = arraysofnumbers.my_map_final do |numbers| numbers * 3; end 
+#print output
+
+#Testing for my_inject method
+
+#def multiply_els(arraysofnumbers)
+#arraysofnumbers.my_inject(1) do |total, numbers|total * numbers; end
+#end
+#arraysofnumbers = [1, 4, 5, 3, 2]
+#puts multiply_els(arraysofnumbers)
 
 
