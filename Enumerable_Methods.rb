@@ -145,7 +145,8 @@ module Enumerable
 end
 
 
-#Testing for my_each method
+#Testing for my_each method 
+#(To test each of these methods, you can take it out of the comment and go ahead with the testing )
 
 #arraysofnumbers = [2, 4, 6, 8, 10, 12]
 #arraysofnumbers.my_each do |numbers|
