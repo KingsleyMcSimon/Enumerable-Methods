@@ -133,16 +133,21 @@ module Enumerable
         mymapfinal
     end
 
-    def my_inject merit = 0 #my_inject method
-        myinjet merit
-        self.my_each do |immediately|
-            myinject = yield myinject immediately
-
-        end
-        myinject
+    def my_inject #my_inject method
+        output = nil
+        my_each = result ? yield (output, b) : self |0|
     end
-
+    output
 end
+
+   def multiply_els #multiply_els method
+    my_inject {|mult, b | mult + b}
+
+   end
+end
+
+
+
 
 
 #Testing for my_each method 
