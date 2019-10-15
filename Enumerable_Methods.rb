@@ -135,7 +135,7 @@ module Enumerable
 
     def my_inject #my_inject method
         output = nil
-        my_each = result ? yield (output, b) : self |0|
+        my_each = output ? yield (output, b) : self |0|
     end
     output
 end
