@@ -11,11 +11,14 @@ Enumerable Methods
 5. License
 6. Contact/Contributors
   i. Link To Project On Github
-7. Acknowledgements
+7. What Was Learnt During The Project  
+8. Acknowledgements
 
 # About The Project:
 
 Enumerable is a module in Ruby that provides many methods that can help with traversal, transforming, sorting, and filtering. Any class that can implement the #each method can use Enumerable methods, which will then yield each item in the collection to a block.
+
+It can also be said that "Enumerable" is actually a "module", which means it is just a bunch of methods packaged together that can (and do) get "mixed in", or included, with other classes like Array and Hash. It's designed to provide useful functionality to classes representing collections of objects.
 
 # Built With:
 
@@ -71,6 +74,10 @@ Kingsley McSimon Ogbonna @KingsleyMcSimon
 
 https://github.com/KingsleyMcSimon/Enumerable-Methods
 
+# What Was Learnt During The Project:
+
+I learnt from this project that modules like Enumerable are the ultimate in DRY (Don't Repeat Yourself) code. I also understood that Ruby programmers don't have to write all those methods as mentioned above many different times - they just write them once, package them up as Enumerables and tell Array and Hash to include them.
+
 # Acknowledgements:
 
 https://medium.com/yello-offline/ruby-the-enumerable-module-under-the-hood-some-caveats-f640ce39a07d
@@ -79,6 +86,7 @@ https://github.com/othneildrew/Best-README-Template
 
 https://www.theodinproject.com/courses/ruby-programming/lessons/advanced-building-blocks
 
+https://www.vikingcodeschool.com/falling-in-love-with-ruby/the-enumerable-module
 
 
 
