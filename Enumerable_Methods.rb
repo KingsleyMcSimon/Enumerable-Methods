@@ -114,14 +114,14 @@ module Enumerable
         mymap
     end
 
-    def my_map_again(myproc) #my_mapa_gain method which takes a proc
+    def my_map_again(myproc) #my_map_again method which takes a proc
         self.my_each do |b|
         mymapagain.push myproc.call(b)
         end
         mymapagain
     end
 
-    def my_map_final myproc = nil #my_map_final method which an either take a proc or a block
+    def my_map_final myproc = nil #my_map_final method which can either take a proc or a block
         mymapfinal = []
         self.my_each do |b|
             if myproc == nil 
@@ -133,12 +133,13 @@ module Enumerable
         mymapfinal
     end
 
-    def my_inject #my_inject method
-        output = nil
-        my_each = output ? yield (output, b) : self |0|
+   def my_inject(param = self[0]) #my_inject method
+    help = self
+    help[1..help.length].each do |b|
+        param = yield(param, b)
     end
-    output
-end
+    param
+end 
 
    def multiply_els #multiply_els method
     my_inject {|mult, b | mult + b}
