@@ -10,9 +10,7 @@ module Enumerable
         self.size.times do
             yield(self[a])
             a += 1
-
         end
-
         self
     end
 
@@ -22,9 +20,7 @@ module Enumerable
             yield(self[a], a)
             a += 1
         end
-
         self
-
     end
 
     def my_select #my_select method
@@ -32,13 +28,9 @@ module Enumerable
         self.my_each do |b|
             if yield (b)
                 myselect.push (b)
-
             end
-
         end
-
         myselect
-
     end
 
     def my_all? #my_all method
@@ -63,14 +55,12 @@ module Enumerable
             if yield (b)
                 output = true
                 break
-
             end
-
         end
         output
     end
 
-    def my_none? #my_none methods
+    def my_none? #my_none method
         output = true
         self.my_each do |b|
             if yield (b)
@@ -81,30 +71,18 @@ module Enumerable
         output
     end
 
-    def my_count parameter = nil #my_count method
+    def my_count #my_count method
         mycount = 0
-        self.my_each do |b|
-            if parameter != nil 
-                if parameter == self[b]
+        myhelp = self
+        myhelp.my_each do |a|
+            if block_given?
+                mycount += 1 if yield(a)
                     mycount += 1
-                end
-            else
-                if yield (b)
-                    mycount += 1
-                    self.my_each do |element|
-                        if parameter
-                            if element == parameter
-                                mycount += 1
-                            end
-                        end
-                    elsif block_given?
-                        mycount += if yield(element)
-                        else
-                            mycount = self.length
-                        end
-                    end
-                    mycount
-                end
+            end
+        end
+        mycount
+    end
+
 
     def my_map #my_map method
         mymap = []
