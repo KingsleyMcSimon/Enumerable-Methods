@@ -25,7 +25,6 @@ def my_each_with_index  #my_each_with_index method
 
         myeachwithindex += 1
     end
-
     self
 end
 end
