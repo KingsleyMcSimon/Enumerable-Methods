@@ -5,38 +5,48 @@
 
 module Enumerable
 
-    def my_each #This is my_each method
-        a = 0
-        self.size.times do
-            yield(self[a])
-            a += 1
+  def my_each  #my_each method
+        myeach = 0
+        while myeach < size
+            yield self[myeach]
+
+            myeach += 1
         end
+
         self
     end
+end
 
-    def my_each_with_index #my_each_with_index
-        a = 0
-        self.size.times do
-            yield(self[a], a)
-            a += 1
-        end
-        self
+
+def my_each_with_index  #my_each_with_index method
+    myeachwithindex = 0
+    while myeachwithindex < size
+        yield (self[myeachwithindex], myeachwithindex)
+
+        myeachwithindex += 1
     end
 
-    def my_select #my_select method
-        myselect = []
-        self.my_each do |b|
-            if yield (b)
-                myselect.push (b)
-            end
+    self
+end
+end
+
+def my_select #my_select method
+    myselect = []
+    while myselect < size
+        if yield (b)
+            myselect.push (b)
         end
         myselect
     end
+end 
+
 
     def my_all? #my_all method
-        myall = []
+        myall = 0
+        #myall = []
         output = true
-        self.my_each do |b|
+       #self.my_each do |b|
+       while myall < size
             if yield (b)
                 myall.push (b)
             end
@@ -48,6 +58,7 @@ module Enumerable
         end
         output
     end
+end
 
     def my_any? #my_any? method
         output = false
@@ -206,5 +217,11 @@ end
 #end
 #arraysofnumbers = [1, 4, 5, 3, 2]
 #puts multiply_els(arraysofnumbers)
+
+
+
+puts 'my_each method imp -> '
+[8, 2, 5, 4].my_each { |num| puts num }
+
 
 
