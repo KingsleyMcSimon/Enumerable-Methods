@@ -19,14 +19,12 @@ end
 
 
 def my_each_with_index  #my_each_with_index method
-    myeachwithindex = 0
-    while myeachwithindex < size
-        yield (self[myeachwithindex], myeachwithindex)
-
-        myeachwithindex += 1
+    k = 0
+    while k < size
+        yield(self[k], k)
+        k += 1
     end
     self
-end
 end
 
 
@@ -94,30 +92,8 @@ end
         mymap
     end
 end
-end
 
-    def my_map_again(myproc) #my_map_again method which takes a proc
-        self.my_each do |b|
-        mymapagain.push myproc.call(b)
-        end
-        mymapagain
-    end
-
-
-    def my_map_final myproc = nil #my_map_final method which can either take a proc or a block
-        mymapfinal = []
-        self.my_each do |b|
-            if myproc == nil 
-                mymapfinal.push yield(b)
-            else
-                mymapfinal.push myproc.call(b)
-            end 
-        end
-        mymapfinal
-    end
-
-
-
+   
    def my_inject(param = self[0]) #my_inject method
     help = self
     help[1..help.length].each do |b|
