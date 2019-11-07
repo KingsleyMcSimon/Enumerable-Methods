@@ -6,110 +6,109 @@
 module Enumerable
 
   def my_each  #my_each method
-        myeach = 0
-        while myeach < size
-            yield self[myeach]
-
-            myeach += 1
+        result = self
+        m = 0
+        while m < result.length
+            yield(result[m])
+            m += 1
         end
-
-        self
+        result
     end
-end
 
 
 def my_each_with_index  #my_each_with_index method
-    k = 0
-    while k < size
-        yield(self[k], k)
-        k += 1
+    result = self
+    m = 0
+    while m < result.length
+        yield(result[m], m)
+        m += 1
     end
-    self
+    result
 end
 
 
 def my_select #my_select method
-    myselect = []
-    while myselect < size
-        if yield (b)
-            myselect.push (b)
-        end
-        myselect
+    result = 0
+    arr = []
+    result.my_each do |k|
+        arr.push(k) if yield(k)
     end
-end 
+    arr
+end
 
 
   def my_all? #my_all? method
-    myall = 0
-    myall.my_each do |d|
-        return false unless yield(d)
+    result = self
+    result.my_each do |n|
+        return false unless yield(n)
     end
     true
 end
 
 
-    def my_any #my_any method
-        self.my_each { |n| return true if yield (n) }
+    def my_any? #my_any method
+        result = self
+        result.my_each do |n|
+            return true if yield(n)
+        end
+        false
     end
 
+
     def my_none? #my_none method
-        mynone = true
-        self.my_each do |b|
-            return false if yield(b)
+        result = self
+        result.my_each do |d|
+            return false if yield(d)
         end
         true
     end
 
 
     def my_count #my_count method
+        result = self
         mycount = 0
-        myhelp = self
-        myhelp.my_each do |a|
-            if block_given?
-                mycount += 1 if yield(a)
-                    mycount += 1
+        result.my_each do |f|
+            if block_given? && yield(f)
+                mycount += 1 
+            else
+                mycount = result.length
             end
         end
         mycount
     end
 
 
-    def my_map(&proc) #my_map method
-        return self.to_enum unless block_given?
-
-
-        mymap = []
-      if self.class == Hash
-        self.each do |a, b|
-
-            mymap << proc.call(a, b)
+    def my_map(proc = nil) #my_map method
+        result = []
+        if proc
+            my_each do |q|
+                result << proc.call(q)
+            end
+        else
+            my_each do |q|
+                result << yield(q)
+            end
         end
-            mymap
-    else
-        self.my_each do |c|
-            mymap << proc.call(c)
-        end
-        mymap
+        result
     end
-end
 
    
    def my_inject(param = self[0]) #my_inject method
-    help = self
-    help[1..help.length].each do |b|
-        param = yield(param, b)
+    myinject = param 
+    result = self
+    result.my_each do |y|
+        next if param == yield
+
+        param = yield(param, y)
     end
     param
-end 
-
-
-
-   def multiply_els #multiply_els method
-    my_inject {|mult, b | mult + b}
-
-   end
+end
 end
 
+
+def multiply_els(par) #multiply_els method
+    par.my_inject(1) { |a, b| a * b }
+end
 
 
 #Here are examples that could be used to test for some of the methods above.
@@ -141,5 +140,7 @@ end
 #array.my_inject
 #end
 
+# puts arr.my_map { |i| i * 2} # => [2, 4, 6, 8, 10]
 
+# puts multiply_els([2,4,5])
 
