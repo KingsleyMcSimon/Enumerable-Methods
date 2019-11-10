@@ -1,12 +1,11 @@
 # /usr/bin/ruby
 # frozen_string_literal: true
 
-
-
 module Enumerable
-
-  def my_each  #my_each method
+  #my_each method
+  def my_each  
         result = self
+        return result.to_enum unless block_given?
         m = 0
         while m < result.length
             yield(result[m])
@@ -15,9 +14,10 @@ module Enumerable
         result
     end
 
-
-def my_each_with_index  #my_each_with_index method
+#my_each_with_index method
+def my_each_with_index  
     result = self
+    return result.to_enum unless block_given?
     m = 0
     while m < result.length
         yield(result[m], m)
@@ -26,9 +26,10 @@ def my_each_with_index  #my_each_with_index method
     result
 end
 
-
-def my_select #my_select method
-    result = 0
+#my_select method
+def my_select 
+    result = self
+    return result.to_enum unless block_given?
     arr = []
     result.my_each do |k|
         arr.push(k) if yield(k)
@@ -36,111 +37,199 @@ def my_select #my_select method
     arr
 end
 
-
-  def my_all? #my_all? method
-    result = self
-    result.my_each do |n|
-        return false unless yield(n)
+# #my_all? method
+def my_all?(param = nil)
+    k = true
+    if block_given?
+      my_each { |a| k = false unless yield a }
     end
-    true
-end
-
-
-    def my_any? #my_any method
-        result = self
-        result.my_each do |n|
-            return true if yield(n)
-        end
-        false
+    if param.class == Regexp
+      my_each { |a| k = false unless a =~ param }
+    elsif param.class == Class
+      my_each { |a| k = false unless a.is_a?(param) }
+    elsif !param.nil?
+      my_each { |a| k = false unless a == param }
     end
-
-
-    def my_none? #my_none method
-        result = self
-        result.my_each do |d|
-            return false if yield(d)
-        end
-        true
+    if param.nil?
+      my_each { |a| k = false unless a }
     end
+    k
+  end
 
+# #my_any? method
+def my_any?(param = nil, &block )
+    n = false
+    if block                      # &block is a reference to the block that is passed to the method
+      my_each { |b| n = true if block.call(b) }
+    elsif param.nil?
+      my_each { |b| n = true if b }
+    else
+      my_each { |b| n = true if param === b }
+    end
+    n 
+  end
 
-    def my_count #my_count method
-        result = self
+# #my_none method
+def my_none?(param = nil, &block)
+    !my_any?(param, &block)
+  end
+
+#my_count method
+    def my_count(*param)
         mycount = 0
-        result.my_each do |f|
-            if block_given? && yield(f)
-                mycount += 1 
+        length.times do |c|
+          if param.empty?
+            if block_given?
+              mycount += 1 if yield self[c]
             else
-                mycount = result.length
+              mycount = 1 + c
             end
+          elsif self[c] == param[0]
+            mycount += 1
+          end
         end
         mycount
+      end
+
+# #my_map method
+def my_map
+    return to_enum unless block_given?
+
+    mymap = Array.new(length)
+    length.times { |q| mymap[q] = yield self[q] }
+    mymap
+  end
+
+#my_inject method
+  def my_inject(param = nil, param1 = nil)
+    result = is_a?(Range) ? min : self[0]
+    if block_given?
+      my_each_with_index { |myinject, q| result = yield(result, myinject) if q.positive? }
+      result = yield(result, param) if param
+    elsif param.is_a?(Symbol) || param.is_a?(String)
+      my_each_with_index { |myinject, q| result = result.send(param, myinject) if q.positive? }
+    elsif param1.is_a?(Symbol) || param1.is_a?(String)
+      my_each_with_index { |myinject, q| result = result.send(param1, myinject) if q.positive? }
+      result = result.send(param1, param)
     end
-
-
-    def my_map(proc = nil) #my_map method
-        result = []
-        if proc
-            my_each do |q|
-                result << proc.call(q)
-            end
-        else
-            my_each do |q|
-                result << yield(q)
-            end
-        end
-        result
-    end
-
-   
-   def my_inject(param = self[0]) #my_inject method
-    myinject = param 
-    result = self
-    result.my_each do |y|
-        next if param == yield
-
-        param = yield(param, y)
-    end
-    param
-end
+    result
+  end
 end
 
+#multiply_els method
+def multiply_els(param) 
+  param.my_inject(1) { |c, d| c * d }
+   end
 
-def multiply_els(par) #multiply_els method
-    par.my_inject(1) { |a, b| a * b }
-end
+#Here are examples that could be used to test for the methods above.
+# ########################################################3
 
+# ary = [1, 2, 4, 2]
+# puts ary.count                  #=> 4
+# puts ary.count(2)               #=> 2
+# puts ary.count { |x| x%2 == 0 } #=> 3
+# puts "-----------"
+# puts ary.my_count                  #=> 4
+# puts ary.my_count(2)               #=> 2
+# puts ary.my_count { |x| x%2 == 0 } #=> 3
 
-#Here are examples that could be used to test for some of the methods above.
+# puts %w[ant bear cat].none? { |word| word.length >= 3 }
+# puts %w[ant bear cat].none? { |word| word.length >= 4 }
+# puts %w[ant bear cat].none?(/t/)
+# puts [1, 2i, 3.14].none?(Numeric)
+# puts [nil, true, 99].none?
+# puts [].none?
+# puts [5, 5, 6].none?(6)
+# puts [5, 5, 5].none?(6)
+# puts "-----------------"
+# puts %w[ant bear cat].my_none? { |word| word.length >= 3 }
+# puts %w[ant bear cat].my_none? { |word| word.length >= 4 }
+# puts %w[ant bear cat].my_none?(/t/)
+# puts [1, 2i, 3.14].my_none?(Numeric)
+# puts [nil, true, 99].my_none?
+# puts [].my_none?
+# puts [5, 5, 6].my_none?(6)
+# puts [5, 5, 5].my_none?(6)
 
-#Testing for my_each method 
-#(To test each of these methods, you can take it out of the comment and go ahead with the testing )
+# puts %w[ant bear cat].any? { |word| word.length >= 3 }
+# puts %w[ant bear cat].any? { |word| word.length >= 4 }
+# puts %w[ant bear cat].any?(/t/)
+# puts [1, 2i, 3.14].any?(Numeric)
+# puts [nil, true, 99].any?
+# puts [].any?
+# puts [5, 5, 6].any?(6)
+# puts [5, 5, 5].any?(6)
+# puts "-----------------"
+# puts %w[ant bear cat].my_any? { |word| word.length >= 3 }
+# puts %w[ant bear cat].my_any? { |word| word.length >= 4 }
+# puts %w[ant bear cat].my_any?(/t/)
+# puts [1, 2i, 3.14].my_any?(Numeric)
+# puts [nil, true, 99].my_any?
+# puts [].my_any?
+# puts [5, 5, 6].my_any?(6)
+# puts [5, 5, 5].my_any?(6)
 
-#k = [1, 2, 3, 4, 5]
-#k.my_each do |myeach|
-#puts myeach
-#end
+# puts %w[ant bear cat].all? { |word| word.length >= 3 } #=> true
+# puts %w[ant bear cat].all? { |word| word.length >= 4 } #=> false
+# puts %w[ant bear cat].all?(/t/)                        #=> false
+# puts [1, 2i, 3.14].all?(Numeric)                       #=> true
+# puts [nil, true, 99].all?                              #=> false
+# puts [].all?                                           #=> true
+# puts [6, 6, 6].all?(6)
+# puts [6, 6, 5].all?(6)
+# puts "-----------------"
+# puts %w[ant bear cat].my_all? { |word| word.length >= 3 } #=> true
+# puts %w[ant bear cat].my_all? { |word| word.length >= 4 } #=> false
+# puts %w[ant bear cat].my_all?(/t/)                        #=> false
+# puts [1, 2i, 3.14].my_all?(Numeric)                       #=> true
+# puts [nil, true, 99].my_all?                              #=> false
+# puts [].my_all?                                           #=> true
+# puts [6, 6, 6].my_all?(6)
+# puts [6, 6, 5].my_all?(6)
 
-#Testing for my_each_with_index method
+# f = [1,2,3,4,5].select { |num|  num.even?  }
+# g = [1,2,3,4,5].my_select { |num|  num.even?  }
+# puts f.to_s
+# puts g.to_s
+# a = %w{ a b c d e f }
+# f = a.select { |v| v =~ /[aeiou]/ }  #=> ["a", "e"]
+# g = a.my_select { |v| v =~ /[aeiou]/ }
+# puts f.to_s
+# puts g.to_s
 
-#fruits = %w(Mango Pawpaw Cashew Pear Orange)
-#fruits.my_each_with_index do |myeachwithindex, idx|
-#puts "#{myeachwithindex} is the fruit with index #{idx}"
-#end
+# hash = Hash.new
+# %w(cat dog wombat).each_with_index { |item, index|
+#   hash[item] = index
+# }
+# puts hash.to_s
+# puts "---each with index---"
+# hash = Hash.new
+# %w(cat dog wombat).my_each_with_index { |item, index|
+#   hash[item] = index
+# }
+# puts hash.to_s
+# puts "---my each with index ---"
+# puts %w(cat dog wombat).each_with_index
+# puts "---each with index---"
+# puts %w(cat dog wombat).my_each_with_index
+# puts "---my each with index---" 
 
-#Testing for my_select method
+# a = [ "a", "b", "c" ]
+# puts a.each { |x| print x, " -- " }
+# puts "-------- each ---------"
+# puts a.my_each { |x| print x, " -- " }
+# puts '-------my each---------'
+# puts a.each
+# puts '-------- each ---------'
+# puts a.my_each
+# puts '-------my each---------'
 
-#strings = %w(Angle Ball Cat Capstone Conquer)
-#puts strings.my_select {|word| word.size > 3 }
-#end
+# self.to_enum
 
+# array = [1,5,8,7,9,5,5,55,5]
+# p array.my_map 
 
-#To test for my_inject
-#array = [1, 2, 3, 4, 5]
-#array.my_inject
-#end
+# array = [1,5,8,7,9,5,5,55,5]
+#   p array.my_inject 
 
-# puts arr.my_map { |i| i * 2} # => [2, 4, 6, 8, 10]
-
-# puts multiply_els([2,4,5])
-
+# puts multiply_els([10,20,30])
