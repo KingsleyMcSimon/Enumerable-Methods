@@ -2,23 +2,24 @@
 # frozen_string_literal: true
 
 module Enumerable
-  
-  #my_each method
+  # my_each method
   def my_each  
-        result = self
-        return result.to_enum unless block_given?
-        m = 0
-        while m < result.length
-            yield(result[m])
-            m += 1
-        end
-        result
-    end
+     result = self
+      return result.to_enum unless block_given?
+      
+      m = 0
+      while m < result.length
+          yield(result[m])
+          m += 1
+      end
+      result
+  end
 
-#my_each_with_index method
+# my_each_with_index method
 def my_each_with_index  
     result = self
     return result.to_enum unless block_given?
+
     m = 0
     while m < result.length
         yield(result[m], m)
@@ -27,9 +28,10 @@ def my_each_with_index
     result
 end
 
-#my_select method
+# my_select method
 def my_select 
     result = self
+
     return result.to_enum unless block_given?
     arr = []
     result.my_each do |k|
@@ -38,7 +40,7 @@ def my_select
     arr
 end
 
-# #my_all? method
+ # my_all? method
 def my_all?(param = nil)
     k = true
     if block_given?
@@ -53,12 +55,12 @@ def my_all?(param = nil)
     end
     if param.nil?
       my_each { |a| k = false unless a }
-    end
+     end
     k
-  end
+end
 
-# #my_any? method
-def my_any?(param = nil, &block )
+# my_any? method
+def my_any?(param = nil, &block)
     n = false
     if block                      # &block is a reference to the block that is passed to the method
       my_each { |b| n = true if block.call(b) }
@@ -70,12 +72,12 @@ def my_any?(param = nil, &block )
     n 
   end
 
-# #my_none method
+# my_none method
 def my_none?(param = nil, &block)
     !my_any?(param, &block)
   end
 
-#my_count method
+# my_count method
     def my_count(*param)
         mycount = 0
         length.times do |c|
@@ -92,7 +94,7 @@ def my_none?(param = nil, &block)
         mycount
       end
 
-# #my_map method
+# my_map method
 def my_map
     return to_enum unless block_given?
 
@@ -101,7 +103,7 @@ def my_map
     mymap
   end
 
-#my_inject method
+# my_inject method
   def my_inject(param = nil, param1 = nil)
     result = is_a?(Range) ? min : self[0]
     if block_given?
@@ -117,13 +119,13 @@ def my_map
   end
 end
 
-#multiply_els method
+# multiply_els method
 def multiply_els(param) 
   param.my_inject(1) { |c, d| c * d }
    end
 
 #Here are examples that could be used to test for the methods above.
-# ########################################################3
+# ########################################################
 
 # ary = [1, 2, 4, 2]
 # puts ary.count                  #=> 4
