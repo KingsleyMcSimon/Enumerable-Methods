@@ -1,18 +1,21 @@
 # /usr/bin/ruby
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/PerceivedComplexity
+# rubocop:disable Metrics/CyclomaticComplexity
+
 module Enumerable
   # my_each method
-  def my_each  
-     result = self
-      return result.to_enum unless block_given?
-      
-      m = 0
-      while m < result.length
-          yield(result[m])
-          m += 1
-      end
-      result
+  def my_each
+    result = self
+    return result.to_enum unless block_given?
+ 
+    m = 0
+    while m < result.length
+      yield(result[m])
+      m += 1
+    end
+    result
   end
 
 # my_each_with_index method
@@ -31,8 +34,8 @@ end
 # my_select method
 def my_select 
     result = self
+ return result.to_enum unless block_given?
 
-    return result.to_enum unless block_given?
     arr = []
     result.my_each do |k|
         arr.push(k) if yield(k)
@@ -42,7 +45,7 @@ end
 
  # my_all? method
 def my_all?(param = nil)
-    k = true
+     k = true
     if block_given?
       my_each { |a| k = false unless yield a }
     end
@@ -60,9 +63,9 @@ def my_all?(param = nil)
 end
 
 # my_any? method
-def my_any?(param = nil, &block)
+def my_any?( param = nil, &block )
     n = false
-    if block                      # &block is a reference to the block that is passed to the method
+    if block                      
       my_each { |b| n = true if block.call(b) }
     elsif param.nil?
       my_each { |b| n = true if b }
@@ -124,6 +127,9 @@ def multiply_els(param)
   param.my_inject(1) { |c, d| c * d }
    end
 
+# rubocop:enable Metrics/PerceivedComplexity
+# rubocop:enable Metrics/CyclomaticComplexity
+  
 #Here are examples that could be used to test for the methods above.
 # ########################################################
 
@@ -236,3 +242,4 @@ def multiply_els(param)
 #   p array.my_inject 
 
 # puts multiply_els([10,20,30])
+
