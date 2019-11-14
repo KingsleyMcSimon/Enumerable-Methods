@@ -20,65 +20,65 @@ module Enumerable
 
 # my_each_with_index method
 def my_each_with_index  
-    result = self
-    return result.to_enum unless block_given?
+  result = self
+  return result.to_enum unless block_given?
 
-    m = 0
-    while m < result.length
-        yield(result[m], m)
-        m += 1
-    end
-    result
+  m = 0
+  while m < result.length
+    yield(result[m], m)
+      m += 1
+  end
+  result
 end
 
 # my_select method
 def my_select 
-    result = self
- return result.to_enum unless block_given?
+  result = self
+  return result.to_enum unless block_given?
 
-    arr = []
-    result.my_each do |k|
-        arr.push(k) if yield(k)
+  arr = []
+  result.my_each do |k|
+    arr.push(k) if yield(k)
     end
     arr
 end
 
- # my_all? method
+# my_all? method
 def my_all?(param = nil)
-     k = true
-    if block_given?
-      my_each { |a| k = false unless yield a }
+   k = true
+   if block_given?
+    my_each { |a| k = false unless yield a }
     end
-    if param.class == Regexp
-      my_each { |a| k = false unless a =~ param }
+   if param.class == Regexp
+    my_each { |a| k = false unless a =~ param }
     elsif param.class == Class
       my_each { |a| k = false unless a.is_a?(param) }
     elsif !param.nil?
-      my_each { |a| k = false unless a == param }
+     my_each { |a| k = false unless a == param }
     end
     if param.nil?
-      my_each { |a| k = false unless a }
-     end
-    k
+     my_each { |a| k = false unless a }
+    end
+   k
 end
 
 # my_any? method
-def my_any?( param = nil, &block )
-    n = false
-    if block                      
-      my_each { |b| n = true if block.call(b) }
-    elsif param.nil?
-      my_each { |b| n = true if b }
-    else
-      my_each { |b| n = true if param === b }
-    end
-    n 
-  end
+def my_any?(param = nil, &block)
+   n = false
+   if block                      
+     my_each { |b| n = true if block.call(b) }
+   elsif param.nil?
+     my_each { |b| n = true if b }
+   else
+     my_each { |b| n = true if param == b }
+   end
+   n
+end
 
 # my_none method
 def my_none?(param = nil, &block)
-    !my_any?(param, &block)
-  end
+  !my_any?(param, &block)
+end
 
 # my_count method
     def my_count(*param)
@@ -95,7 +95,7 @@ def my_none?(param = nil, &block)
           end
         end
         mycount
-      end
+    end
 
 # my_map method
 def my_map
@@ -104,14 +104,14 @@ def my_map
     mymap = Array.new(length)
     length.times { |q| mymap[q] = yield self[q] }
     mymap
-  end
+end
 
 # my_inject method
-  def my_inject(param = nil, param1 = nil)
-    result = is_a?(Range) ? min : self[0]
-    if block_given?
-      my_each_with_index { |myinject, q| result = yield(result, myinject) if q.positive? }
-      result = yield(result, param) if param
+def my_inject(param = nil, param1 = nil)
+  result = is_a?(Range) ? min : self[0]
+  if block_given?
+    my_each_with_index { |myinject, q| result = yield(result, myinject) if q.positive? }
+    result = yield(result, param) if param
     elsif param.is_a?(Symbol) || param.is_a?(String)
       my_each_with_index { |myinject, q| result = result.send(param, myinject) if q.positive? }
     elsif param1.is_a?(Symbol) || param1.is_a?(String)
@@ -125,7 +125,7 @@ end
 # multiply_els method
 def multiply_els(param) 
   param.my_inject(1) { |c, d| c * d }
-   end
+end
 
 # rubocop:enable Metrics/PerceivedComplexity
 # rubocop:enable Metrics/CyclomaticComplexity
