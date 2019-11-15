@@ -9,7 +9,7 @@ module Enumerable
   def my_each
     result = self
     return result.to_enum unless block_given?
- 
+    
     m = 0
     while m < result.length
       yield(result[m])
@@ -97,8 +97,8 @@ end
         mycount
     end
 
-# my_map method
-def my_map
+  # my_map method
+  def my_map
     return to_enum unless block_given?
 
     mymap = Array.new(length)
@@ -106,20 +106,16 @@ def my_map
     mymap
 end
 
-# my_inject method
-def my_inject(param = nil, param1 = nil)
-  result = is_a?(Range) ? min : self[0]
-  if block_given?
-    my_each_with_index { |myinject, q| result = yield(result, myinject) if q.positive? }
-    result = yield(result, param) if param
-    elsif param.is_a?(Symbol) || param.is_a?(String)
-      my_each_with_index { |myinject, q| result = result.send(param, myinject) if q.positive? }
-    elsif param1.is_a?(Symbol) || param1.is_a?(String)
-      my_each_with_index { |myinject, q| result = result.send(param1, myinject) if q.positive? }
-      result = result.send(param1, param)
-    end
-    result
+# my_inject method  
+def my_inject(start = 0)
+  i = 0
+  accumulator = start
+  while i < self.size
+    accumulator = yield(accumulator, self[i])
+    i += 1
   end
+  accumulator
+end
 end
 
 # multiply_els method
