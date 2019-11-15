@@ -110,7 +110,7 @@
   def my_inject(start = 0)
     i = 0
     accumulator = start
-    while i < self.size
+    while i < size
       accumulator = yield(accumulator, self[i])
       i += 1
     end
@@ -125,8 +125,8 @@
   
 # rubocop:enable Metrics/PerceivedComplexity
 # rubocop:enable Metrics/CyclomaticComplexity
-  
-#Here are examples that could be used to test for the methods above.
+
+# Here are examples that could be used to test for the methods above.
 # ########################################################
 
 # ary = [1, 2, 4, 2]
@@ -232,10 +232,10 @@
 # self.to_enum
 
 # array = [1,5,8,7,9,5,5,55,5]
-# p array.my_map 
+# p array.my_map
 
 # array = [1,5,8,7,9,5,5,55,5]
-#   p array.my_inject 
+# p array.my_inject 
 
 # puts multiply_els([10,20,30])
 
