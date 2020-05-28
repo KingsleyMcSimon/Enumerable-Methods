@@ -80,13 +80,15 @@ I learnt from this project that modules like Enumerable are the ultimate in DRY 
 
 # Acknowledgements:
 
-https://medium.com/yello-offline/ruby-the-enumerable-module-under-the-hood-some-caveats-f640ce39a07d
+[Medium - The Enumerable Module](https://medium.com/yello-offline/ruby-the-enumerable-module-under-the-hood-some-caveats-f640ce39a07d)
 
-https://github.com/othneildrew/Best-README-Template
+[Best ReadMe Template](https://github.com/othneildrew/Best-README-Template)
 
-https://www.theodinproject.com/courses/ruby-programming/lessons/advanced-building-blocks
+[The Odin Project - Advanced Building Blocks](https://www.theodinproject.com/courses/ruby-programming/lessons/advanced-building-blocks)
 
-https://www.vikingcodeschool.com/falling-in-love-with-ruby/the-enumerable-module
+[Vikings - The Enumerable Module ](https://www.vikingcodeschool.com/falling-in-love-with-ruby/the-enumerable-module)
+
+To as many that supported and guided me towards this project, my regards to them all.
 
 
 

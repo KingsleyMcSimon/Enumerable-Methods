@@ -7,4 +7,5 @@ files:
     - "db/*"
     - "config/*"
     - "Guardfile"
-    - "Rakefile" 
+    - "Rakefile"
+    
