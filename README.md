@@ -68,11 +68,11 @@ Distributed under the MIT Licence. See Licence for more informaton
 
 # Contributor(s):
 
-Kingsley McSimon Ogbonna @KingsleyMcSimon 
+[Kingsley McSimon Ogbonna](https://github.com/KingsleyMcSimon) 
 
 # Link To The Project On Github:
 
-https://github.com/KingsleyMcSimon/Enumerable-Methods
+[Enumerable-Methods](https://github.com/KingsleyMcSimon/Enumerable-Methods)
 
 # What Was Learnt During The Project:
 
