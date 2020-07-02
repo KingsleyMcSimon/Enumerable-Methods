@@ -50,7 +50,7 @@ To get started, here below are the steps that needs to be taken in order to achi
 11. Modify your #my_map method to take a proc instead.
 12. Modify your #my_map method to take either a proc or a block. It won’t be necessary to apply both a proc and a block in the same #my_map call since you could get the same effect by chaining together one #my_map call with the block and one with the proc. This approach is also clearer, since the user doesn’t have to remember whether the proc or block will be run first. So if both a proc and a block are given, only execute the proc.
 
-# contributing:
+# Contributing:
 
 In this project, your contributions towards helping in improving this project is woild be well accomodated. With that, the project will get better rating and give programmers at any level the ability learn, be inspired and create better content.
 
@@ -89,6 +89,3 @@ I learnt from this project that modules like Enumerable are the ultimate in DRY 
 [Vikings - The Enumerable Module ](https://www.vikingcodeschool.com/falling-in-love-with-ruby/the-enumerable-module)
 
 To as many that supported and guided me towards this project, my regards to them all.
-
-
-
