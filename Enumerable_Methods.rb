@@ -17,7 +17,7 @@
     end
     result
   end
-  
+
   # my_each_with_index method
   def my_each_with_index
     result = self
