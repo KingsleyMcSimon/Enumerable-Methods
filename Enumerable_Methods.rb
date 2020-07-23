@@ -111,15 +111,13 @@
     i = 0
     accumulator = start
     while i < size
-      accumulator = yield(accumulator, self[i])
       i += 1
     end
     accumulator
-  end
   end
 
   # multiply_els method
   def multiply_els(param)
     param.my_inject(1) { |c, d| c * d }
   end
-  
+end 
