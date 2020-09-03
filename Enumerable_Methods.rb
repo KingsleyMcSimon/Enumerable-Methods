@@ -5,7 +5,8 @@
 # rubocop:disable Metrics/CyclomaticComplexity
 
   module Enumerable
-  # my_each method
+  # my_each method 
+  UNDEFINED = Object.new
   def my_each 
     result = self
     return result.to_enum unless block_given?
@@ -63,10 +64,10 @@
   end
 
   # my_any? method
-  def my_any?(param = nil, &block)
+  def my_any?(param = nil)
     n = false
-    if block
-      my_each { |b| n = true if block.call(b) }
+    if block_given?
+      my_each { |b| n = true if yield(b) }
     elsif param.nil?
       my_each { |b| n = true if b }
     else
@@ -76,9 +77,15 @@
   end
 
   # my_none method
-  def my_none?(param = nil, &block)
-    !my_any?(param, &block)
+  def my_none?(param = nil)
+       n = true
+    if block_given?
+      my_each { |b| n = false if yield(b) }
+    else
+  n = !my_any?(param) 
   end
+  n
+end
 
   # my_count method
   def my_count(*param)
@@ -105,15 +112,31 @@
     length.times { |q| mymap[q] = yield self[q] }
     mymap
   end
-  
-  # my_inject method
-  def my_inject(start = 0)
-    i = 0
-    accumulator = start
-    while i < size
-      i += 1
+
+  def my_inject(prev = UNDEFINED, choice = UNDEFINED)
+    vol = prev
+    vol = 0 if prev == UNDEFINED
+    case choice
+
+    when UNDEFINED
+      if block_given?
+        my_each do |b|
+          vol = yield(vol, b)
+        end
+        vol
+      elsif prev.is_a?(Symbol)
+        my_inject do |mem, object|
+          mem.method(prev).call(object)
+        end
+      end
+    else
+      if choice.is_a?(Symbol)
+        vol = prev
+        my_inject(sum) do |mem, object|
+          mem.method(choice).call(object)
+        end
+      end
     end
-    accumulator
   end
 
   # multiply_els method
