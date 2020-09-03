@@ -144,5 +144,3 @@ end
     param.my_inject(1) { |c, d| c * d }
   end
 end 
-
-# (5..10).my_inject { |sum, n| sum + n } 
